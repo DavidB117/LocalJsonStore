@@ -7,13 +7,13 @@ using System.Reflection;
 namespace LocalJsonStoreUnitTests.AuthServiceUnitTests
 {
     [TestClass]
-    public class GenerateSaltUnitTests
+    public class GenerateSalt
     {
         private const int NUMBER_OF_SALTS_TO_GENERATE = 100;
 
         public IAuthService AuthenticationService { get; set; }
 
-        public GenerateSaltUnitTests()
+        public GenerateSalt()
         {
             AuthenticationService = new AuthService();
         }

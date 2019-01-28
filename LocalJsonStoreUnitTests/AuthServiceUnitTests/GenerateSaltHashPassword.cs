@@ -4,11 +4,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace LocalJsonStoreUnitTests.AuthServiceUnitTests
 {
     [TestClass]
-    public class GenerateSaltHashPasswordUnitTests
+    public class GenerateSaltHashPassword
     {
         public IAuthService AuthenticationService { get; set; }
 
-        public GenerateSaltHashPasswordUnitTests()
+        public GenerateSaltHashPassword()
         {
             AuthenticationService = new AuthService();
         }

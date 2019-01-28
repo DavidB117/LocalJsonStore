@@ -49,16 +49,22 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthServiceUnitTests\GenerateSaltHashPasswordUnitTests.cs" />
-    <Compile Include="AuthServiceUnitTests\GenerateSaltUnitTests.cs" />
-    <Compile Include="AuthServiceUnitTests\HashPasswordUnitTests.cs" />
+    <Compile Include="AuthServiceUnitTests\GenerateSaltHashPassword.cs" />
+    <Compile Include="AuthServiceUnitTests\GenerateSalt.cs" />
+    <Compile Include="AuthServiceUnitTests\HashPassword.cs" />
+    <Compile Include="LocalJsonStoreUnitTests\ConstructorUnitTests\DefaultConstructor.cs" />
+    <Compile Include="LocalJsonStoreUnitTests\ConstructorUnitTests\OneArgConstructor.cs" />
+    <Compile Include="LocalJsonStoreUnitTests\ConstructorUnitTests\TwoArgConstructor.cs" />
+    <Compile Include="LocalJsonStoreUnitTests\TestModels\TestUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="LocalJsonStoreUnitTests\" />
+    <Folder Include="LocalJsonStoreUnitTests\FileMethods\" />
+    <Folder Include="LocalJsonStoreUnitTests\GeneralMethods\" />
+    <Folder Include="LocalJsonStoreUnitTests\SubDirectoryMethods\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocalJsonStore\LocalJsonStore.csproj">

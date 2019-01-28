@@ -26,12 +26,17 @@ namespace LocalJsonStore
         public IAuthService AuthenticationService { get; }
         public string CurrentDirectory { get; }
         public string DataDirectory { get; }
+
+        private List<string> _subDirectories;
         public List<string> SubDirectories
         {
-            get { return SubDirectories; }
+            get
+            {
+                return _subDirectories;
+            }
             set
             {
-                SubDirectories = value ?? throw new ArgumentNullException();
+                _subDirectories = value ?? throw new ArgumentNullException();
 
                 // remove all _dataDirectorySubDirectories thats keys are not in SubDirectories list
                 foreach (var x in _dataDirectorySubDirectories)

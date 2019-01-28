@@ -6,11 +6,11 @@ using System.Reflection;
 namespace LocalJsonStoreUnitTests.AuthServiceUnitTests
 {
     [TestClass]
-    public class HashPasswordUnitTests
+    public class HashPassword
     {
         public IAuthService AuthenticationService { get; set; }
 
-        public HashPasswordUnitTests()
+        public HashPassword()
         {
             AuthenticationService = new AuthService();
         }
