@@ -6,7 +6,22 @@ namespace LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.ConstructorUnitTests
     public class TwoArgConstructor
     {
         [TestMethod]
-        public void TestMethod1()
+        public void DefaultSubDirectories()
+        {
+        }
+
+        [TestMethod]
+        public void CustomSubDirectories()
+        {
+        }
+
+        [TestMethod]
+        public void SetSubDirectories()
+        {
+        }
+        
+        [TestMethod]
+        public void GetSubDirectories()
         {
         }
     }
