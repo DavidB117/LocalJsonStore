@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalJsonStore", "LocalJsonStore\LocalJsonStore.csproj", "{C2A41FA7-009E-43E1-B419-EE8ABD3C647B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalJsonStoreUnitTests", "LocalJsonStoreUnitTests\LocalJsonStoreUnitTests.csproj", "{141AC7AA-33FE-4A17-838F-FAC0782F0A80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C2A41FA7-009E-43E1-B419-EE8ABD3C647B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2A41FA7-009E-43E1-B419-EE8ABD3C647B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2A41FA7-009E-43E1-B419-EE8ABD3C647B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{141AC7AA-33FE-4A17-838F-FAC0782F0A80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{141AC7AA-33FE-4A17-838F-FAC0782F0A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{141AC7AA-33FE-4A17-838F-FAC0782F0A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{141AC7AA-33FE-4A17-838F-FAC0782F0A80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

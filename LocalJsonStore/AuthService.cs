@@ -24,9 +24,9 @@ namespace LocalJsonStore
             return salt;
         }
 
-        public string HashPassword(string password)
+        public string HashPassword(string passwordAndSalt)
         {
-            return Sha256Hash(password);
+            return Sha256Hash(passwordAndSalt);
         }
 
         public string HashPassword(string password, string salt)
