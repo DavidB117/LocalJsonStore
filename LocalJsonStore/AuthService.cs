@@ -6,13 +6,15 @@ namespace LocalJsonStore
 {
     public class AuthService : IAuthService
     {
-        #region Constants
-        private const int DEFAULT_SALT_LENGTH_MIN = 6;
-        private const int DEFAULT_SALT_LENGTH_MAX = 10;
-        private const string CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        #endregion
+        protected const int _defaultSaltLengthMin = 6;
+        protected const int _defaultSaltLengthMax = 10;
+        protected const string _defaultCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        public string GenerateSalt(int saltLengthMin = DEFAULT_SALT_LENGTH_MIN, int saltLengthMax = DEFAULT_SALT_LENGTH_MAX, string characters = CHARACTERS)
+        public int DEFAULT_SALT_LENGTH_MIN => _defaultSaltLengthMin;
+        public int DEFAULT_SALT_LENGTH_MAX => _defaultSaltLengthMax;
+        public string DEFAULT_CHARACTERS => _defaultCharacters;
+
+        public string GenerateSalt(int saltLengthMin = _defaultSaltLengthMin, int saltLengthMax = _defaultSaltLengthMax, string characters = _defaultCharacters)
         {
             var random = new Random();
             var saltLength = (saltLengthMin != saltLengthMax) ? random.Next(saltLengthMin, saltLengthMax) : saltLengthMin;

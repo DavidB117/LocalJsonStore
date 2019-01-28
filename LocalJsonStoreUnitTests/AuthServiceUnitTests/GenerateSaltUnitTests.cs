@@ -9,50 +9,36 @@ namespace LocalJsonStoreUnitTests.AuthServiceUnitTests
     [TestClass]
     public class GenerateSaltUnitTests
     {
-        #region Constants
-        // copied over from the AuthService.cs file
-        private const int DEFAULT_SALT_LENGTH_MIN = 6;
-        private const int DEFAULT_SALT_LENGTH_MAX = 10;
-        private const string CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        // specific to this unit test file
         private const int NUMBER_OF_SALTS_TO_GENERATE = 100;
-        private const string TEST_FAILED = "TEST_FAILED.";
-        #endregion
 
-        #region Properties
-        public IAuthService AuthService { get; set; }
-        #endregion
+        public IAuthService AuthenticationService { get; set; }
 
-        #region Constructor
         public GenerateSaltUnitTests()
         {
-            AuthService = new AuthService();
+            AuthenticationService = new AuthService();
         }
-        #endregion
 
-        #region Methods
         [TestMethod]
         public void ReturnsValue()
         {
             var m = MethodBase.GetCurrentMethod();
-            var msg = TEST_FAILED + m.ReflectedType.Name + "." + m.Name + ": ";
+            var msg = "TEST_FAILED." + m.ReflectedType.Name + "." + m.Name + ": ";
 
-            var s = AuthService.GenerateSalt();
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(s), msg + "salt does not return a value");
+            var s = AuthenticationService.GenerateSalt();
+            Assert.IsTrue(!string.IsNullOrWhiteSpace(s), msg + "salt does not return a value [" + s + "]");
         }
 
         [TestMethod]
         public void SaltLengthWithinDefaultRange()
         {
             var m = MethodBase.GetCurrentMethod();
-            var msg = TEST_FAILED + m.ReflectedType.Name + "." + m.Name + ": ";
+            var msg = "TEST_FAILED." + m.ReflectedType.Name + "." + m.Name + ": ";
 
             for (var i = 0; i < NUMBER_OF_SALTS_TO_GENERATE; i++)
             {
-                var s = AuthService.GenerateSalt();
-                Assert.IsTrue(s.Length >= DEFAULT_SALT_LENGTH_MIN, msg + "salt length is less than the minimum it should be");
-                Assert.IsTrue(s.Length <= DEFAULT_SALT_LENGTH_MAX, msg + "salt length is greater than the maximum it should be");
+                var s = AuthenticationService.GenerateSalt();
+                Assert.IsTrue(s.Length >= AuthenticationService.DEFAULT_SALT_LENGTH_MIN, msg + "salt length [" + s.Length + "] is less than the default minimum [" + AuthenticationService.DEFAULT_SALT_LENGTH_MIN + "] it should be");
+                Assert.IsTrue(s.Length <= AuthenticationService.DEFAULT_SALT_LENGTH_MAX, msg + "salt length [" + s.Length + "] is greater than the default maximum [" + AuthenticationService.DEFAULT_SALT_LENGTH_MAX + "] it should be");
             }
         }
 
@@ -60,23 +46,16 @@ namespace LocalJsonStoreUnitTests.AuthServiceUnitTests
         public void SaltLengthWithinRandomRanges()
         {
             var m = MethodBase.GetCurrentMethod();
-            var msg = TEST_FAILED + m.ReflectedType.Name + "." + m.Name + ": ";
+            var msg = "TEST_FAILED." + m.ReflectedType.Name + "." + m.Name + ": ";
 
             var r = new Random();
             for (var i = 0; i < NUMBER_OF_SALTS_TO_GENERATE; i++)
             {
-                var min = r.Next();
-                var max = r.Next();
-                if (min > max)
-                {
-                    var temp = min;
-                    min = max;
-                    max = temp;
-                }
-
-                var s = AuthService.GenerateSalt(min, max);
-                Assert.IsTrue(s.Length >= min, msg + "salt length is less than the minimum it should be");
-                Assert.IsTrue(s.Length <= max, msg + "salt length is greater than the maximum it should be");
+                var min = r.Next(0, 9);
+                var max = r.Next(10, 19);
+                var s = AuthenticationService.GenerateSalt(min, max);
+                Assert.IsTrue(s.Length >= min, msg + "salt length [" + s.Length + "] is less than the minimum [" + min + "] it should be");
+                Assert.IsTrue(s.Length <= max, msg + "salt length [" + s.Length + "] is greater than the maximum [" + max + "] it should be");
             }
         }
 
@@ -84,40 +63,39 @@ namespace LocalJsonStoreUnitTests.AuthServiceUnitTests
         public void SaltOnlyContainsDefaultCharacters()
         {
             var m = MethodBase.GetCurrentMethod();
-            var msg = TEST_FAILED + m.ReflectedType.Name + "." + m.Name + ": ";
+            var msg = "TEST_FAILED." + m.ReflectedType.Name + "." + m.Name + ": ";
 
             for (var i = 0; i < NUMBER_OF_SALTS_TO_GENERATE; i++)
             {
-                var s = AuthService.GenerateSalt();
+                var s = AuthenticationService.GenerateSalt();
                 foreach (var c in s)
                 {
-                    Assert.IsTrue(CHARACTERS.Contains(c.ToString()), msg + "salt using default character set contains non-default characters");
+                    Assert.IsTrue(AuthenticationService.DEFAULT_CHARACTERS.Contains(c.ToString()), msg + "salt using default character set [" + AuthenticationService.DEFAULT_CHARACTERS + "]contains non-default character " + c.ToString());
                 }
             }
         }
 
         [TestMethod]
-        public void SaltOnlyContainsRandomCharacters()
+        public void SaltOnlyContainsPseudoRandomCharacters()
         {
             var m = MethodBase.GetCurrentMethod();
-            var msg = TEST_FAILED + m.ReflectedType.Name + "." + m.Name + ": ";
+            var msg = "TEST_FAILED." + m.ReflectedType.Name + "." + m.Name + ": ";
 
-            var randomChars = new List<string>()
+            var pseudoRandomChars = new List<string>()
             {
                 "POSDFKalgjui14790",
                 "poiuytrewqasdfghbn75432MNCBZXTQWYDF",
                 "ABCDEFGHIJK1290678hdjskalzxcvb"
             };
 
-            foreach (var rc in randomChars)
+            foreach (var rc in pseudoRandomChars)
             {
-                var s = AuthService.GenerateSalt(DEFAULT_SALT_LENGTH_MIN, DEFAULT_SALT_LENGTH_MAX, rc);
+                var s = AuthenticationService.GenerateSalt(AuthenticationService.DEFAULT_SALT_LENGTH_MIN, AuthenticationService.DEFAULT_SALT_LENGTH_MAX, rc);
                 foreach (var c in s)
                 {
                     Assert.IsTrue(rc.Contains(c.ToString()), msg + "salt in random character set [" + rc + "] does not contain " + c.ToString());
                 }
             }
         }
-        #endregion
     }
 }

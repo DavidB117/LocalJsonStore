@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthServiceUnitTests\GenerateSaltHashPasswordUnitTests.cs" />
     <Compile Include="AuthServiceUnitTests\GenerateSaltUnitTests.cs" />
     <Compile Include="AuthServiceUnitTests\HashPasswordUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
