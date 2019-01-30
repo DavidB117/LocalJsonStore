@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace LocalJsonStore
 {
@@ -12,21 +13,19 @@ namespace LocalJsonStore
         #region Constants
         private const string FILE_TYPE = ".json";
         private const string DOUBLE_BACK_SLASH = "\\";
-        private const string DEFAULT_DATA_FOLDER_NAME = "_Data";
-        private const string DEFAULT_BACKUP_FOLDER_NAME = "_DataBackup";
+        private const string DEFAULT_DATA_FOLDER_NAME_SUFIX = "_Data";
+        private const string DEFAULT_BACKUP_FOLDER_NAME_SUFIX = "_DataBackup";
         #endregion
 
-        #region Properties
-        // private properties
+        #region PrivateProperties
         private readonly Dictionary<string, string> _dataDirectorySubDirectories; // key = directory name, value = directory path
         private string _defaultDataFolderName { get; }
         private string _defaultBackupFolderName { get; }
+        #endregion
 
-        // public properties
-        public IAuthService AuthenticationService { get; }
+        #region PublicProperties
         public string CurrentDirectory { get; }
         public string DataDirectory { get; }
-
         private List<string> _subDirectories;
         public List<string> SubDirectories
         {
@@ -39,14 +38,20 @@ namespace LocalJsonStore
                 _subDirectories = value ?? throw new ArgumentNullException();
 
                 // remove all _dataDirectorySubDirectories thats keys are not in SubDirectories list
-                foreach (var x in _dataDirectorySubDirectories)
+                for (var i = _dataDirectorySubDirectories.Keys.Count - 1; i >= 0; i--)
                 {
-                    if (!SubDirectories.Contains(x.Key))
+                    if (!SubDirectories.Contains(_dataDirectorySubDirectories[_dataDirectorySubDirectories.Keys.ElementAt(i)]))
                     {
-                        _dataDirectorySubDirectories.Remove(x.Key);
-                        DeleteSubDirectory(x.Key);
+                        DeleteSubDirectory(_dataDirectorySubDirectories.Keys.ElementAt(i));
                     }
                 }
+                //foreach (var x in _dataDirectorySubDirectories.Keys)
+                //{
+                //    if (!SubDirectories.Contains(x))
+                //    {
+                //        DeleteSubDirectory(x);
+                //    }
+                //}
 
                 // add all new directories in SubDirectories to our _dataDirectorySubDirectories structure
                 foreach (var dir in SubDirectories)
@@ -70,13 +75,12 @@ namespace LocalJsonStore
         #region Constructor
         public LocalJsonStore(string dataDirectory = null, List<string> subDirectories = null)
         {
-            _defaultDataFolderName = Process.GetCurrentProcess().ProcessName + DEFAULT_DATA_FOLDER_NAME;
-            _defaultBackupFolderName = Process.GetCurrentProcess().ProcessName + DEFAULT_BACKUP_FOLDER_NAME;
+            // constants that are dynamically allocated
+            _defaultDataFolderName = Process.GetCurrentProcess().ProcessName + DEFAULT_DATA_FOLDER_NAME_SUFIX;
+            _defaultBackupFolderName = Process.GetCurrentProcess().ProcessName + DEFAULT_BACKUP_FOLDER_NAME_SUFIX;
 
-            AuthenticationService = new AuthService();
-            CurrentDirectory = Directory.GetCurrentDirectory();
-
-            DataDirectory = CurrentDirectory + DOUBLE_BACK_SLASH + ((!string.IsNullOrWhiteSpace(dataDirectory)) ? dataDirectory : _defaultDataFolderName) + DOUBLE_BACK_SLASH;
+            CurrentDirectory = Directory.GetCurrentDirectory() + DOUBLE_BACK_SLASH;
+            DataDirectory = CurrentDirectory + ((!string.IsNullOrWhiteSpace(dataDirectory)) ? dataDirectory : _defaultDataFolderName) + DOUBLE_BACK_SLASH;
             Directory.CreateDirectory(DataDirectory);
 
             _dataDirectorySubDirectories = new Dictionary<string, string>();
@@ -306,7 +310,8 @@ namespace LocalJsonStore
             }
             else
             {
-                throw new DirectoryNotFoundException();
+                throw new DirectoryNotFoundException(MethodBase.GetCurrentMethod().ReflectedType.Name + "." + MethodBase.GetCurrentMethod().Name + ": " +
+                    subDirectoryName + " directory was not found");
             }
         }
         #endregion

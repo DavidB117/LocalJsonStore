@@ -19,17 +19,10 @@ namespace LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.ConstructorUnitTests
         }
 
         [TestMethod]
-        public void AuthenticationServiceInitialized()
-        {
-            var msg = "TEST_FAILED." + MethodBase.GetCurrentMethod().ReflectedType.Name + "." + MethodBase.GetCurrentMethod().Name + ": ";
-            Assert.IsNotNull(Ljs.AuthenticationService, msg + "AuthService [" + Ljs.AuthenticationService + "] not initialized with default constructor");
-        }
-
-        [TestMethod]
         public void CurrentDirectoryInitialized()
         {
             var msg = "TEST_FAILED." + MethodBase.GetCurrentMethod().ReflectedType.Name + "." + MethodBase.GetCurrentMethod().Name + ": ";
-            Assert.IsTrue(Ljs.CurrentDirectory == Directory.GetCurrentDirectory(), msg + "CurrentDirectory [" + Ljs.CurrentDirectory + "][" + Directory.GetCurrentDirectory() + "] not initialized with default constructor");
+            Assert.IsTrue(Ljs.CurrentDirectory == Directory.GetCurrentDirectory() + "\\", msg + "CurrentDirectory [" + Ljs.CurrentDirectory + "][" + Directory.GetCurrentDirectory() + "] not initialized with default constructor");
         }
 
         [TestMethod]

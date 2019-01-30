@@ -1,6 +1,7 @@
 ﻿using LocalJsonStore;
 using LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -78,8 +79,23 @@ namespace LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.ConstructorUnitTests
         }
 
         [TestMethod]
-        public void SetSubDirectoriesToNull()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SetSubDirectoriesToNull1()
         {
+#pragma warning disable IDE0017 // Simplify object initialization
+            var x = new LocalJsonStore<TestUser>();
+#pragma warning restore IDE0017 // Simplify object initialization
+            x.SubDirectories = null;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SetSubDirectoriesToNull2()
+        {
+            var x = new LocalJsonStore<TestUser>
+            {
+                SubDirectories = null
+            };
         }
     }
 }

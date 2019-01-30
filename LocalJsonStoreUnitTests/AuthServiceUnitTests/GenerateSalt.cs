@@ -51,8 +51,8 @@ namespace LocalJsonStoreUnitTests.AuthServiceUnitTests
             var r = new Random();
             for (var i = 0; i < NUMBER_OF_SALTS_TO_GENERATE; i++)
             {
-                var min = r.Next(0, 9);
-                var max = r.Next(10, 19);
+                var min = r.Next(1, 10);
+                var max = r.Next(11, 20);
                 var s = AuthenticationService.GenerateSalt(min, max);
                 Assert.IsTrue(s.Length >= min, msg + "salt length [" + s.Length + "] is less than the minimum [" + min + "] it should be");
                 Assert.IsTrue(s.Length <= max, msg + "salt length [" + s.Length + "] is greater than the maximum [" + max + "] it should be");

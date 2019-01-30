@@ -10,12 +10,10 @@ namespace LocalJsonStore
     public class CryptService : ICryptService
     {
         private const string _padding = "00000000000000000000000000000000";
-
         private byte[] _processEncryptionKey(string s)
         {
             return _getSubArray(Encoding.UTF8.GetBytes(s + _padding), 0, KEY_BYTE_LENGTH);
         }
-
         private T[] _getSubArray<T>(T[] data, int index, int length)
         {
             T[] result = new T[length];
@@ -30,8 +28,8 @@ namespace LocalJsonStore
 
         public string Encrypt(string str, string encryptionKey)
         {
-            if (str == null || str.Length <= 0) throw new ArgumentNullException(nameof(str));
-            if (encryptionKey == null || encryptionKey.Length <= 0) throw new ArgumentNullException(nameof(encryptionKey));
+            if (string.IsNullOrWhiteSpace(str)) throw new ArgumentNullException(nameof(str) + " is null or white space");
+            if (string.IsNullOrWhiteSpace(encryptionKey)) throw new ArgumentNullException(nameof(encryptionKey) + " is null or white space");
 
             byte[] encrypted;
             using (var rm = new RijndaelManaged())
@@ -49,7 +47,7 @@ namespace LocalJsonStore
                         {
                             sw.Write(str);
                         }
-                        encrypted = encrypted.Concat(ms.ToArray()).ToArray(); // TODO do i need to be doing this ????? might auto prepend iv ???? what to do
+                        encrypted = encrypted.Concat(ms.ToArray()).ToArray();
                     }
                 }
             }
@@ -58,8 +56,8 @@ namespace LocalJsonStore
 
         public string Decrypt(string encryptedStr, string encryptionKey)
         {
-            if (encryptedStr == null || encryptedStr.Length <= 0) throw new ArgumentNullException(nameof(encryptedStr));
-            if (encryptionKey == null || encryptionKey.Length <= 0) throw new ArgumentNullException(nameof(encryptionKey));
+            if (string.IsNullOrWhiteSpace(encryptedStr)) throw new ArgumentNullException(nameof(encryptedStr) + " is null or white space");
+            if (string.IsNullOrWhiteSpace(encryptionKey)) throw new ArgumentNullException(nameof(encryptionKey) + " is null or white space");
 
             var temp = Convert.FromBase64String(encryptedStr);
 

@@ -4,7 +4,6 @@ namespace LocalJsonStore
 {
     public interface ILocalJsonStore<T>
     {
-        IAuthService AuthenticationService { get; }
         string CurrentDirectory { get; }
         string DataDirectory { get; }
         List<string> SubDirectories { get; set; }
