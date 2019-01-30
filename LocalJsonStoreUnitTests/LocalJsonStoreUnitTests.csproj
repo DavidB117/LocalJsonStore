@@ -52,6 +52,7 @@
     <Compile Include="AuthServiceUnitTests\GenerateSaltHashPassword.cs" />
     <Compile Include="AuthServiceUnitTests\GenerateSalt.cs" />
     <Compile Include="AuthServiceUnitTests\HashPassword.cs" />
+    <Compile Include="CryptServiceUnitTests\EncryptDecrypt.cs" />
     <Compile Include="LocalJsonStoreUnitTests\ConstructorUnitTests\DefaultConstructor.cs" />
     <Compile Include="LocalJsonStoreUnitTests\ConstructorUnitTests\OneArgConstructor.cs" />
     <Compile Include="LocalJsonStoreUnitTests\ConstructorUnitTests\TwoArgConstructor.cs" />

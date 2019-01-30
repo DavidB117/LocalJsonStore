@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthService.cs" />
+    <Compile Include="CryptService.cs" />
     <Compile Include="IAuthService.cs" />
+    <Compile Include="ICryptService.cs" />
     <Compile Include="ILocalJsonStore.cs" />
     <Compile Include="LocalJsonStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

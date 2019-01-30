@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace LocalJsonStore
 {
@@ -38,6 +38,8 @@ namespace LocalJsonStore
 
         private string Sha256Hash(string str)
         {
+            if (str == null) throw new ArgumentNullException(nameof(str));
+
             using (var sha256 = SHA256.Create())
             {
                 var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(str));
