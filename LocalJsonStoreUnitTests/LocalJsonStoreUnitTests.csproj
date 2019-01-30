@@ -53,10 +53,9 @@
     <Compile Include="AuthServiceUnitTests\GenerateSalt.cs" />
     <Compile Include="AuthServiceUnitTests\HashPassword.cs" />
     <Compile Include="CryptServiceUnitTests\EncryptDecrypt.cs" />
-    <Compile Include="LocalJsonStoreUnitTests\ConstructorUnitTests\DefaultConstructor.cs" />
-    <Compile Include="LocalJsonStoreUnitTests\ConstructorUnitTests\OneArgConstructor.cs" />
-    <Compile Include="LocalJsonStoreUnitTests\ConstructorUnitTests\TwoArgConstructor.cs" />
-    <Compile Include="LocalJsonStoreUnitTests\TestModels\TestUser.cs" />
+    <Compile Include="LocalJsonStoreUnitTests\Constructors\DefaultConstructor.cs" />
+    <Compile Include="LocalJsonStoreUnitTests\Constructors\OneArgConstructor.cs" />
+    <Compile Include="LocalJsonStoreUnitTests\Constructors\TwoArgConstructor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="LocalJsonStoreUnitTests\FileMethods\" />
-    <Folder Include="LocalJsonStoreUnitTests\GeneralMethods\" />
+    <Folder Include="LocalJsonStoreUnitTests\Properties\" />
     <Folder Include="LocalJsonStoreUnitTests\SubDirectoryMethods\" />
   </ItemGroup>
   <ItemGroup>

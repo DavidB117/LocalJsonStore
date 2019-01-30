@@ -8,7 +8,7 @@ namespace LocalJsonStore
         string DataDirectory { get; }
         List<string> SubDirectories { get; set; }
 
-        bool BackUpLocalJsonStore(string targetPath = null);
+        bool BackUpLocalJsonStore(string targetPath = null, bool overwrite = true);
 
         bool DoesFileExist(string fileName);
         bool DoesFileExist(string subDirectoryName, string fileName);

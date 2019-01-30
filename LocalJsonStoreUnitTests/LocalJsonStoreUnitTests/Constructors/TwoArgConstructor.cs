@@ -1,11 +1,10 @@
 ﻿using LocalJsonStore;
-using LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.ConstructorUnitTests
+namespace LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.Constructors
 {
     [TestClass]
     public class TwoArgConstructor

@@ -45,13 +45,6 @@ namespace LocalJsonStore
                         DeleteSubDirectory(_dataDirectorySubDirectories.Keys.ElementAt(i));
                     }
                 }
-                //foreach (var x in _dataDirectorySubDirectories.Keys)
-                //{
-                //    if (!SubDirectories.Contains(x))
-                //    {
-                //        DeleteSubDirectory(x);
-                //    }
-                //}
 
                 // add all new directories in SubDirectories to our _dataDirectorySubDirectories structure
                 foreach (var dir in SubDirectories)
@@ -75,21 +68,19 @@ namespace LocalJsonStore
         #region Constructor
         public LocalJsonStore(string dataDirectory = null, List<string> subDirectories = null)
         {
-            // constants that are dynamically allocated
+            _dataDirectorySubDirectories = new Dictionary<string, string>();
             _defaultDataFolderName = Process.GetCurrentProcess().ProcessName + DEFAULT_DATA_FOLDER_NAME_SUFIX;
             _defaultBackupFolderName = Process.GetCurrentProcess().ProcessName + DEFAULT_BACKUP_FOLDER_NAME_SUFIX;
 
             CurrentDirectory = Directory.GetCurrentDirectory() + DOUBLE_BACK_SLASH;
             DataDirectory = CurrentDirectory + ((!string.IsNullOrWhiteSpace(dataDirectory)) ? dataDirectory : _defaultDataFolderName) + DOUBLE_BACK_SLASH;
             Directory.CreateDirectory(DataDirectory);
-
-            _dataDirectorySubDirectories = new Dictionary<string, string>();
             SubDirectories = subDirectories ?? new List<string>();
         }
         #endregion
 
         #region GeneralMethods
-        public bool BackUpLocalJsonStore(string targetPath = null)
+        public bool BackUpLocalJsonStore(string targetPath = null, bool overwrite = true)
         {
             if (string.IsNullOrWhiteSpace(targetPath))
             {
@@ -100,19 +91,16 @@ namespace LocalJsonStore
                 targetPath += DOUBLE_BACK_SLASH + _defaultBackupFolderName + DOUBLE_BACK_SLASH;
             }
 
-            // create target directory if it doesn't exist
             if (!Directory.Exists(targetPath)) Directory.CreateDirectory(targetPath);
 
-            // copy all files
             foreach (var sourceFilePath in Directory.GetFiles(DataDirectory))
             {
-                File.Copy(sourceFilePath, Path.Combine(targetPath, Path.GetFileName(sourceFilePath)), true);
+                File.Copy(sourceFilePath, Path.Combine(targetPath, Path.GetFileName(sourceFilePath)), overwrite);
             }
 
-            // copy all sub directories
             foreach (var sourceDirectoryPath in Directory.GetDirectories(DataDirectory))
             {
-                File.Copy(sourceDirectoryPath, Path.Combine(targetPath, Path.GetFileName(sourceDirectoryPath)));
+                File.Copy(sourceDirectoryPath, Path.Combine(targetPath, Path.GetDirectoryName(sourceDirectoryPath)), overwrite);
             }
 
             return true;
@@ -121,14 +109,15 @@ namespace LocalJsonStore
         public override string ToString()
         {
             const string TAB = "\t";
+            const string CHEVRON = "> ";
             const string FILE = " (file)";
             const string DIRECTORY = " (directory)";
-            var str = (!string.IsNullOrWhiteSpace(base.ToString())) ? (base.ToString() + Environment.NewLine) : string.Empty;
+            var str = string.Empty;
             str += Path.GetDirectoryName(DataDirectory) + DIRECTORY + Environment.NewLine;
             foreach (var x in GetAllFileNames()) str += TAB + x + FILE + Environment.NewLine;
             foreach (var x in GetAllSubDirectories())
             {
-                str += TAB + x + DIRECTORY + Environment.NewLine;
+                str += TAB + CHEVRON + x + DIRECTORY + Environment.NewLine;
                 foreach (var y in GetAllFileNames(x))
                 {
                     str += TAB + TAB + y + FILE + Environment.NewLine;
@@ -148,7 +137,7 @@ namespace LocalJsonStore
         {
             return File.Exists(GetSubDirectoryPath(subDirectoryName) + fileName + FILE_TYPE);
         }
-
+        
         public List<string> GetAllFileNames()
         {
             return _getAllFileNames(Directory.GetFiles(DataDirectory).ToList());
@@ -158,7 +147,7 @@ namespace LocalJsonStore
         {
             return _getAllFileNames(Directory.GetFiles(DataDirectory + subDirectoryName + DOUBLE_BACK_SLASH).ToList());
         }
-
+        
         public bool CreateFile(string fileName, T data)
         {
             return _createFile(DataDirectory + fileName + FILE_TYPE, data);
@@ -200,7 +189,7 @@ namespace LocalJsonStore
         }
 
 
-        // private helper methods
+        
         private List<string> _getAllFileNames(List<string> filePaths)
         {
             var fileNames = new List<string>();
@@ -224,16 +213,11 @@ namespace LocalJsonStore
         }
         private T _readFile(string fullPath)
         {
-            // returns default of object being serialized
-            T myObj = default(T);
+            T myObj = default(T); // default of object being serialized
             if (File.Exists(fullPath))
-            {
                 myObj = JsonConvert.DeserializeObject<T>(File.ReadAllText(fullPath));
-            }
             else
-            {
                 throw new FileNotFoundException();
-            }
             return myObj;
         }
         private bool _updateFile(string fullPath, T data)

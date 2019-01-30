@@ -1,13 +1,20 @@
 ﻿using LocalJsonStore;
-using LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
-namespace LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.ConstructorUnitTests
+namespace LocalJsonStoreUnitTests.LocalJsonStoreUnitTests.Constructors
 {
+    public class TestUser
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public string Name { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+    }
+
     [TestClass]
     public class DefaultConstructor
     {
